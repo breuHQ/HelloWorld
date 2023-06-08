@@ -20,6 +20,8 @@ import (
 	"testing"
 )
 
+// comment
+
 func TestHandler(t *testing.T) {
 	tests := []struct {
 		label string
