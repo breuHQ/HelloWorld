@@ -27,6 +27,7 @@ import (
 
 func main() {
 	// comment
+	//comment
 	log.Print("starting server...")
 	http.HandleFunc("/", handler)
 
