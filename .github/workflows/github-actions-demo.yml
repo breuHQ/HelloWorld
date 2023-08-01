@@ -1,0 +1,25 @@
+name: GitHub Actions Demo
+on: [push]
+jobs:
+  release-artifact:
+    runs-on: ubuntu-20.04
+    permissions:
+      contents: "read"
+      id-token: "write"
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+      
+      - name: Set variables
+        id: vars
+        run: echo "short_sha=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+
+      - name: Build Docker image
+        run: |
+          docker build -t helloworld:latest .
+          docker tag helloworld:latest asia-southeast1-docker.pkg.dev/breu-dev/ctrlplane/helloworld:latest
+          docker tag helloworld:latest asia-southeast1-docker.pkg.dev/breu-dev/ctrlplane/helloworld:${{ steps.vars.outputs.short_sha }} 
+
+      - name: docker ps
+        run: docker ps
